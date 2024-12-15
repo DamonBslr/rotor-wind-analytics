@@ -1,14 +1,11 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import SensorOverview from "@/components/sensor-overview";
-import { TempAreaChart } from "@/components/temp-area-chart";
-import { TempLineChart } from "@/components/temp-line-chart";
+import { CurrentTempChart } from "@/components/current-temp-chart";
+import { CurrentTempList } from "@/components/current-temp-list";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -37,10 +34,10 @@ export default function Page() {
         </header>
         <div className="grid grid-cols-3 gap-4 p-4 pt-0">
           <div className="col-span-3 md:col-span-2">
-            <TempLineChart />
+            <CurrentTempChart className="h-full" />
           </div>
           <div className="grid-cols-3 md:grid-cols-1">
-            <SensorOverview />
+            <CurrentTempList className="h-full" />
           </div>
         </div>
       </SidebarInset>
