@@ -14,6 +14,25 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+
 export default function Page() {
   return (
     <SidebarProvider>
@@ -32,7 +51,50 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
+
         <div className="grid grid-cols-3 gap-4 p-4 pt-0">
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle className="text-md">Sensor Health</CardTitle>
+              <CardDescription>
+                All machines are operating within normal parameters
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle className="text-md">Maintenance</CardTitle>
+              <CardDescription>
+                2 machines are due for maintenance
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle className="text-md">Maintenance</CardTitle>
+              <CardDescription>
+                2 machines are due for maintenance
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+
           <div className="col-span-3 md:col-span-2">
             <CurrentTempChart className="h-full" />
           </div>

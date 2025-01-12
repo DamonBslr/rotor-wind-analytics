@@ -41,7 +41,7 @@ export const CurrentTempChart = ({ className }: { className?: string }) => {
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle className="flex justify-between items-center">
+        <CardTitle className="flex justify-between items-center text-md">
           <span>Temperature History</span>
           <div className="h-2 w-2 rounded-full bg-emerald-400">
             <div className="h-2 w-2 animate-ping rounded-full bg-emerald-400" />
