@@ -32,22 +32,26 @@ export function convertSensorData(data: SensorsData[]): ChartDataPoint[] {
   return chartData;
 }
 
-export function generateMockData(numSensors: number, numReadings: number): SensorsData[] {
+export function generateMockData(
+  numSensors: number,
+  numReadings: number
+): SensorsData[] {
   const data: SensorsData[] = [];
-  const baseTime = new Date();
+  // const baseTime = new Date();
 
-  for (let i = 0; i < numReadings; i++) {
-    for (let sensorId = 1; sensorId <= numSensors; sensorId++) {
-      data.push({
-        id: data.length + 1,
-        sensor_id: sensorId,
-        temp: Math.floor(Math.random() * 30) + 10, // Random temperature between 10 and 40
-        created_at: new Date(baseTime.getTime() - i * 60000)// Each reading is 1 minute apart
-      });
+  const startTime = new Date(new Date().getTime() - 1000 * 60 * numReadings); // 10 minutes ago
+
+  for (let i = 0; i < numSensors; i++) {
+    let temp = Math.floor(Math.random() * 10) + 50; // Initial temperature
+    for (let j = 0; j < numReadings; j++) {
+      const createdAt = new Date(startTime.getTime() + j * 60000); // Increment by 1 minute
+      data.push({ id: i + 1, temp, created_at: createdAt, sensor_id: i + 1 });
+
+      // Adjust temperature slightly for the next minute
+      const tempChange = Math.random() < 0.5 ? Math.floor(Math.random() * -5) - 1 : Math.floor(Math.random() * 5) + 1;
+      temp += tempChange;
     }
   }
 
   return data;
 }
-
-

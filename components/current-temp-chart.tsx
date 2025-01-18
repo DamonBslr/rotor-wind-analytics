@@ -17,11 +17,13 @@ import {
   convertSensorData,
   generateMockData,
 } from "@/lib/convert-sensor-data";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
   Line,
   LineChart,
+  ReferenceLine,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -29,25 +31,45 @@ import {
 
 const NUM_SENSORS = 5;
 const NUM_READINGS = 10;
+const WARNING_TEMP = 80;
+const CRITICAL_TEMP = 100;
 
 export const CurrentTempChart = ({ className }: { className?: string }) => {
   const [chartData, setChartData] = useState<ChartDataPoint[]>([]);
-
   useEffect(() => {
     const mockData = generateMockData(NUM_SENSORS, NUM_READINGS);
     setChartData(convertSensorData(mockData));
   }, []);
 
+  const warningTemp = chartData.some((reading) => {
+    return Object.values(reading).some((temp) => temp > WARNING_TEMP);
+  });
+
+  const criticalTemp = chartData.some((reading) => {
+    return Object.values(reading).some((temp) => temp > CRITICAL_TEMP);
+  });
+
+
   return (
     <Card className={className}>
       <CardHeader>
         <CardTitle className="flex justify-between items-center text-md">
-          <span>Temperature History</span>
-          <div className="h-2 w-2 rounded-full bg-emerald-400">
-            <div className="h-2 w-2 animate-ping rounded-full bg-emerald-400" />
+          <span>Temperaturverlauf</span>
+          <div
+            className={cn(
+              "h-2 w-2 rounded-full",
+              criticalTemp ? "bg-red-500" : (warningTemp ? "bg-orange-400" : "bg-emerald-400")
+            )}
+          >
+            <div
+              className={cn(
+                "h-2 w-2 animate-ping rounded-full",
+                criticalTemp ? "bg-red-500" : (warningTemp ? "bg-orange-400" : "bg-emerald-400")
+              )}
+            />
           </div>
         </CardTitle>
-        <CardDescription>Temperature readings over time</CardDescription>
+        <CardDescription>Temperaturwerte der letzten 2 Stunden</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -65,7 +87,7 @@ export const CurrentTempChart = ({ className }: { className?: string }) => {
           className="h-[400px] w-full"
         >
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
+            <LineChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />
               <XAxis
                 tickLine={false}
@@ -81,7 +103,10 @@ export const CurrentTempChart = ({ className }: { className?: string }) => {
                 tickMargin={8}
                 tickCount={5}
               />
-              <ChartTooltip content={<ChartTooltipContent />} />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
               {Array.from({ length: NUM_SENSORS }, (_, i) => (
                 <Line
                   key={i + 1}
@@ -89,8 +114,11 @@ export const CurrentTempChart = ({ className }: { className?: string }) => {
                   dataKey={`${i + 1}`}
                   stroke={`var(--color-${i + 1})`}
                   name={`Sensor ${i + 1}`}
+                  dot={false}
                 />
               ))}
+              <ReferenceLine y={WARNING_TEMP} stroke="orange" strokeDasharray="3 3" />
+              <ReferenceLine y={CRITICAL_TEMP} stroke="red" strokeDasharray="3 3" />
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>

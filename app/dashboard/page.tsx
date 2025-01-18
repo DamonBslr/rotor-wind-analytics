@@ -14,7 +14,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -23,15 +22,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 
 export default function Page() {
   return (
@@ -52,55 +42,57 @@ export default function Page() {
           </div>
         </header>
 
-        <div className="grid grid-cols-3 gap-4 p-4 pt-0">
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle className="text-md">Sensor Health</CardTitle>
-              <CardDescription>
-                All machines are operating within normal parameters
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-             
-            </CardContent>
-            <CardFooter className="flex justify-between">
-            </CardFooter>
-          </Card>
+        <div className="grid grid-cols-12 gap-4 p-4 pt-0">
 
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle className="text-md">Maintenance</CardTitle>
-              <CardDescription>
-                2 machines are due for maintenance
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-             
-            </CardContent>
-            <CardFooter className="flex justify-between">
-            </CardFooter>
-          </Card>
-
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle className="text-md">Maintenance</CardTitle>
-              <CardDescription>
-                2 machines are due for maintenance
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-             
-            </CardContent>
-            <CardFooter className="flex justify-between">
-            </CardFooter>
-          </Card>
-
-          <div className="col-span-3 md:col-span-2">
+          <div className="col-span-12 md:col-span-8">
             <CurrentTempChart className="h-full" />
           </div>
-          <div className="grid-cols-3 md:grid-cols-1">
+          <div className="ol-span-12 md:col-span-4">
             <CurrentTempList className="h-full" />
           </div>
+
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle className="text-md">Sensor Status</CardTitle>
+              <CardDescription>
+                Alle Sensoren reagieren im Normalbereich
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle className="text-md">Wartungsoptimierung</CardTitle>
+              <CardDescription>
+                2 machines are due for maintenance
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+          
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle className="text-md">Anomalieerkennung</CardTitle>
+              <CardDescription>
+                Das System hat keine Anomalien erkannt
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+             
+            </CardContent>
+            <CardFooter className="flex justify-between">
+            </CardFooter>
+          </Card>
+
         </div>
       </SidebarInset>
     </SidebarProvider>
