@@ -17,21 +17,27 @@ import {
   TableRow,
 } from "./ui/table";
 import { useEffect, useState } from "react";
-import { generateMockData } from "@/lib/convert-sensor-data";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import { ChevronRight } from "lucide-react";
+import { useHover } from "./HoverContext";
 
-const NUM_SENSORS = 5;
-const NUM_READINGS = 10;
 const WARNING_TEMP = 80;
 const CRITICAL_TEMP = 100;
 
-export const CurrentTempList = ({ className }: { className?: string }) => {
+export const CurrentTempList = ({
+  data,
+  className,
+}: {
+  data: SensorsData[];
+  className?: string;
+}) => {
   const [sensorData, setSensorData] = useState<SensorsData[]>([]);
+  const { setHoveredSensorId } = useHover();
 
   useEffect(() => {
-    const mockData = generateMockData(NUM_SENSORS, NUM_READINGS);
-    setSensorData(mockData);
+    setSensorData(data);
   }, []);
 
   const latestReadings = sensorData.reduce((acc, reading) => {
@@ -92,8 +98,13 @@ export const CurrentTempList = ({ className }: { className?: string }) => {
           <TableBody>
             {Object.values(latestReadings)
               .sort((a, b) => b.temp - a.temp)
+              .slice(0, 5)
               .map((reading) => (
-                <TableRow key={reading.sensor_id}>
+                <TableRow
+                  key={reading.sensor_id}
+                  onMouseEnter={() => setHoveredSensorId(reading.sensor_id)}
+                  onMouseLeave={() => setHoveredSensorId(null)}
+                >
                   <TableCell>{reading.sensor_id}</TableCell>
                   <TableCell>
                     {reading.temp}°C{" "}
@@ -108,13 +119,21 @@ export const CurrentTempList = ({ className }: { className?: string }) => {
                       vor{" "}
                       {Math.round(
                         (Date.now() - new Date(reading.created_at).getTime()) /
-                          60000
+                          1000
                       )}{" "}
-                      min
+                      sec
                     </Badge>
                   </TableCell>
                 </TableRow>
               ))}
+            <TableRow>
+              <TableCell colSpan={3}>
+                <Button variant={"ghost"} className="p-0 und">
+                  Alle anzeigen
+                  <ChevronRight />
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </CardContent>

@@ -35,7 +35,7 @@ const data = {
     {
       name: "Rotor Wind GmbH",
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: "Monitoring",
     },
     // {
     //   name: "Acme Corp.",
